@@ -5,6 +5,7 @@
 # Purpose : Delete stale branches older than 90 days
 #           across all repositories
 # Auth    : GH_TOKEN secret (gh CLI handles auth automatically)
+# Author. : Rushikesh Bhoir
 # ============================================================
 
 # --------------------
