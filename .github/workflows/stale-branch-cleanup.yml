@@ -1,0 +1,32 @@
+name: Stale Branch Cleanup
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (true = only print, false = actually delete)'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run stale branch cleanup
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
+        run: |
+          chmod +x .github/scripts/delete_stale_branches.sh
+          .github/scripts/delete_stale_branches.sh
